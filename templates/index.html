@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Movie Recommender</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header><h1>🎬 Movie Recommender</h1><p>Content-based recommendations and box-office prediction on the TMDB 5000 dataset</p></header>
+
+<nav class="tabs">
+  <button class="tab active" data-tab="rec">Recommend</button>
+  <button class="tab" data-tab="rev">Predict revenue</button>
+</nav>
+
+<main>
+  <section id="rec" class="panel active">
+    <div class="search">
+      <input id="q" type="text" placeholder="Type a movie title, e.g. Avatar" autocomplete="off">
+      <div id="suggest" class="suggest"></div>
+    </div>
+    <div class="controls">
+      <label>Genre filter
+        <select id="genre"><option value="">Any</option>{% for g in genres %}<option>{{ g }}</option>{% endfor %}</select>
+      </label>
+      <label>How many
+        <select id="n"><option>6</option><option selected>10</option><option>20</option></select>
+      </label>
+      <button id="go">Recommend</button>
+    </div>
+    <div id="msg"></div>
+    <div id="query"></div>
+    <div id="results" class="grid"></div>
+  </section>
+
+  <section id="rev" class="panel">
+    <form id="revform">
+      <label>Budget (USD)<input name="budget" type="number" min="10000" value="100000000" required></label>
+      <label>Runtime (min)<input name="runtime" type="number" min="40" max="300" value="120" required></label>
+      <label>Release year<input name="year" type="number" min="1900" max="2100" value="2025" required></label>
+      <label>Release month<input name="month" type="number" min="1" max="12" value="7" required></label>
+      <label>Production companies<input name="n_companies" type="number" min="1" max="20" value="3"></label>
+      <label>Language<select name="language"><option value="en">English</option><option value="other">Other</option></select></label>
+      <fieldset><legend>Genres</legend>
+        {% for g in genres %}<label class="chk"><input type="checkbox" name="genres" value="{{ g }}">{{ g }}</label>{% endfor %}
+      </fieldset>
+      <button type="submit">Predict</button>
+    </form>
+    <div id="revout"></div>
+  </section>
+</main>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

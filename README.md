@@ -1,4 +1,4 @@
-# Movie Recommender (TMDB 5000) - Flask app
+# CineRecommender
 
 Content-based movie recommendations plus box-office revenue prediction.
 
